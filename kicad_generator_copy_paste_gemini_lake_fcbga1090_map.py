@@ -6,6 +6,7 @@
 the_pdf = """
 # ctrl-a, ctrl-c and ctrl-v here
 
+
 """
 
 PAD_SIZE_MM = 0.45
@@ -36,7 +37,7 @@ def build_kicad_footprint():
             break
 
         if target == 1:
-            ball_num = line_split[0]
+            ball_num = line_split[0].removesuffix("+")
             ddr4_name = line_split[1]
             signal_map[ball_num] = ddr4_name
             continue
@@ -53,7 +54,8 @@ def build_kicad_footprint():
                 print(f"Warning: unmatched pin label: {pin_label}")
                 display_name = pin_label
             else:
-                display_name = signal_map.get(pin_label)
+                display_name = signal_map.pop(pin_label)
+                
             pad_str = f'  (pad "{display_name}" smd circle (at {x_coord:.4f} {y_coord:.4f}) (size {PAD_SIZE_MM} {PAD_SIZE_MM}) (layers "F.Cu" "F.Paste" "F.Mask"))'
             pad_expressions.append(pad_str)
 
@@ -71,6 +73,11 @@ def build_kicad_footprint():
   (fp_line (start -11.00 -12.50) (end -12.00 -11.50) (stroke (width 0.12) (type solid)) (layer "F.Fab"))
 {chr(10).join(pad_expressions)}
 )"""
+    if len(signal_map) > 0:
+        print("Warning: found unmatched signals")
+
+        for key, value in signal_map.items():
+            print(f"{key} {value}")
 
     with open(OUTPUT_FILENAME, "w", encoding="utf-8") as f:
         f.write(footprint_template.strip())
