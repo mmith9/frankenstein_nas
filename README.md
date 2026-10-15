@@ -9,5 +9,6 @@ The frankenstein NAS is built for low power consumption, and has ability to turn
 
 Files:
 main.py - this is micropython code that goes to ESP32
+
 nas.py - this is CLI control of the nas subsystems invoked on main unit.
 
