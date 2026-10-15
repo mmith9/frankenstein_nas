@@ -12,3 +12,7 @@ main.py - this is micropython code that goes to ESP32
 
 nas.py - this is CLI control of the nas subsystems invoked on main unit.
 
+Intel's pdf about Gemini Lake SoC:
+https://www.intel.com/content/www/us/en/content-details/336560/intel-pentium-silver-and-celeron-processors-datasheet-vol-1.html
+Contains a map of balls of fcbga1090 Soc. The format of the map in the pdf is absolutely atrocious. I've made a little toolsie that will generate a kicad footprint of the SoC that's actually useful.
+
